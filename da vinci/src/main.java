@@ -8,7 +8,7 @@ public class main {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		
-		ManipuladorArquivo.leitor("/da vinci/src/t2b.txt");
+		ManipuladorArquivo.leitor("t2b.txt");
 		
 	}
 
