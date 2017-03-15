@@ -7,7 +7,7 @@ import java.util.Scanner;
  
 public class ManipuladorArquivo {
  
-    public static void leitor(String path) throws IOException {
+    public static String leitor(String path) throws IOException {
         BufferedReader buffRead = new BufferedReader(new FileReader(path));
         String linha = "";
         while (true) {
@@ -19,6 +19,7 @@ public class ManipuladorArquivo {
             linha = buffRead.readLine();
         }
         buffRead.close();
+        return linha;
     }
  
     public static void escritor(String path) throws IOException {
