@@ -1,18 +1,24 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 
 public class main {
 	
 	private static String mFilename = "t2b.txt";
+	private static String wFilename = "t2bImage.txt";
 	private static int p;
 	
 	public static void main(String[] args) throws IOException{
 		BufferedReader br = new BufferedReader(new FileReader(mFilename));
+		File arquivo = new File(wFilename);
+		FileWriter fileW = new FileWriter(arquivo);
+		BufferedWriter buffW = new BufferedWriter(fileW);
 		char ch;
 		String line="";
 		int index=100;
@@ -25,64 +31,63 @@ public class main {
 	           index=index/10;
 	        }
 		System.out.println(tamanho);
+		buffW.write("<svg xmlns="+"\"http://www.w3.org/2000/svg\""+" width="+"\""+tamanho+"cm\""+" height="+"\""+tamanho+"cm\""+" viewBox="+"\"0 0 8 8\""+"> <g style="+"\"stroke-width:.05; stroke:black\""+">");
+		buffW.newLine();
 		line = br.readLine();
 		System.out.println(line.length());
 		br.close();
 		int i = 0;
+		int tamanhoAtual=0;
 		
-		
-		i = lerletra1(i, tamanho, line);
-		
+		i = lerletra1(arquivo, i, tamanho, line, tamanhoAtual, fileW, buffW);
 		System.out.println(p);
+		buffW.close();
 	}
 	
-	public static int lerletra(int i, int tamanhoAtual, String line){
+	public static int lerletra(File arquivo, int tamanho, int i, int tamanhoAtual, String line, FileWriter fileW, BufferedWriter buffW) throws IOException{
 		if(line.charAt(i)=='c'){
+			buffW.newLine();
+			buffW.newLine();
 			tamanhoAtual = tamanhoAtual /2;			
-			System.out.println(i);
 			i++;
-			i=lerletra(i, tamanhoAtual, line);
-			System.out.println(i);
+			i=lerletra(arquivo, tamanho, i, tamanhoAtual, line, fileW, buffW);
+			buffW.newLine();
 			i++;
-			i=lerletra(i, tamanhoAtual, line);
-			System.out.println(i);
+			i=lerletra(arquivo, tamanho, i, tamanhoAtual, line, fileW, buffW);
+			buffW.newLine();
 			i++;
-			i=lerletra(i, tamanhoAtual, line);
-			System.out.println(i);
+			i=lerletra(arquivo, tamanho, i, tamanhoAtual, line, fileW, buffW);
+			buffW.newLine();
 			i++;
-			i=lerletra(i, tamanhoAtual, line);
+			i=lerletra(arquivo, tamanho, i, tamanhoAtual, line, fileW, buffW);
+			buffW.newLine();
 		} else if(line.charAt(i)=='b'){
-			
+			buffW.write("<rect x="+"\""+(tamanho-tamanhoAtual)+"\""+" y="+"\""+(tamanho-tamanhoAtual)+"\""+" width="+"\""+tamanhoAtual+"\""+" height="+"\""+tamanhoAtual+"\""+" style="+"\"fill:white\""+"/>");
 		} else if(line.charAt(i)=='p'){
-			
+			buffW.write("<rect x="+"\""+(tamanho-tamanhoAtual)+"\""+" y="+"\""+(tamanho-tamanhoAtual)+"\""+" width="+"\""+tamanhoAtual+"\""+" height="+"\""+tamanhoAtual+"\""+" style="+"\"fill:black\""+"/>");
 			p = p + tamanhoAtual *2;			
 		}
 		return i;
 	}
 	
-	public static int lerletra1(int i, int tamanho, String line){
+	public static int lerletra1(File arquivo,int i, int tamanho, String line, int tamanhoAtual,FileWriter fileW, BufferedWriter buffW) throws IOException{
 		if(line.charAt(i)=='c'){
-			int	tamanhoAtual = tamanho /2;			
-			System.out.println(i);
+			tamanhoAtual = tamanho /2;		
+			buffW.newLine();
 			i++;
-			i=lerletra(i, tamanhoAtual, line);
-			System.out.println(i);
+			i=lerletra(arquivo, tamanho, i, tamanhoAtual, line, fileW, buffW);
 			i++;
-			i=lerletra(i, tamanhoAtual, line);
-			System.out.println(i);
+			i=lerletra(arquivo, tamanho, i, tamanhoAtual, line, fileW, buffW);
 			i++;
-			i=lerletra(i, tamanhoAtual, line);
-			System.out.println(i);
+			i=lerletra(arquivo, tamanho, i, tamanhoAtual, line, fileW, buffW);
 			i++;
-			i=lerletra(i, tamanhoAtual, line);
+			i=lerletra(arquivo, tamanho, i, tamanhoAtual, line, fileW, buffW);
 		} else if(line.charAt(i)=='b'){
-			
-			System.out.println(i);
+			buffW.write("<rect x="+"\""+(tamanho-tamanhoAtual)+"\""+" y="+"\""+(tamanho-tamanhoAtual)+"\""+" width="+"\""+tamanhoAtual+"\""+" height="+"\""+tamanhoAtual+"\""+" style="+"\"fill:white\""+"/>");
 			i++;
 		} else if(line.charAt(i)=='p'){
-			
+			buffW.write("<rect x="+"\""+(tamanho-tamanhoAtual)+"\""+" y="+"\""+(tamanho-tamanhoAtual)+"\""+" width="+"\""+tamanhoAtual+"\""+" height="+"\""+tamanhoAtual+"\""+" style="+"\"fill:black\""+"/>");
 			p = p + tamanho *2;
-			System.out.println(i);
 			i++;
 		}
 		return i;
