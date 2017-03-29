@@ -33,18 +33,20 @@ public class Heap {
   private void sift_down ( int pos ) {
 	  if(v[left(pos)]==0)return;
 	  if(v[right(pos)]>0){
-		if(v[right(pos)]>v[left(pos)]){
-			int aux=v[pos];
-			v[pos]=v[right(pos)];
-			v[right(pos)]= aux;
-			sift_down(right(pos));
-		} else{
-			int aux=v[pos];
-			v[pos]=v[left(pos)];
-			v[left(pos)]= aux;
-			sift_down(left(pos));
-		}
-	  } else{
+		  if( v[right(pos)]>v[pos] || v[left(pos)]>v[pos]){
+			  if(v[right(pos)]>v[left(pos)]){
+				  int aux=v[pos];
+				  v[pos]=v[right(pos)];
+				  v[right(pos)]= aux;
+				  sift_down(right(pos));
+			  } else{
+				  int aux=v[pos];
+				  v[pos]=v[left(pos)];
+				  v[left(pos)]= aux;
+				  sift_down(left(pos));
+			  }
+		  }
+	  } else if(v[left(pos)]>v[pos]){
 		  int aux=v[pos];
 		  v[pos]=v[left(pos)];
 		  v[left(pos)]= aux;
@@ -84,5 +86,13 @@ public class Heap {
     print( 0, 1, 32 );
     System.out.println( "" );
   }
+  
+  public void heapSort(){
+	  for(int i = size/2;i>=0;i--){
+		  sift_down(i);
+	  }
+  }
+
+
 
 }
